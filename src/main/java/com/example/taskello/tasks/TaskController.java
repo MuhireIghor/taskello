@@ -33,6 +33,7 @@ public class TaskController {
 try{
     return new ResponseEntity<>(taskService.addTodo(task),HttpStatus.CREATED);
 }catch(TaskAlreadyExists ex1){
+    System.out.println("message is "+ex1.getMessage());
    return new ResponseEntity(ex1.getMessage(),HttpStatus.CONFLICT);
 }
     }
