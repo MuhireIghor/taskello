@@ -1,14 +1,13 @@
 package com.example.taskello.tasks;
 
 import jakarta.persistence.*;
-import org.hibernate.annotations.BatchSize;
+import jakarta.validation.constraints.Size;
 
 import java.time.LocalDate;
 
 @Entity(name = "Task")
-
 @Table(name = "task")
-public class Task {
+public class Taskello {
     @Id
     @SequenceGenerator(
             name = "task_sequence",
@@ -31,6 +30,11 @@ public class Task {
             name = "task",
             nullable = false,
             columnDefinition = "TEXT"
+    )
+    @Size(
+            min = 3,
+            message = "A task name should be at least 3 characters long"
+
     )
 
 
@@ -60,8 +64,10 @@ public class Task {
     @Column(
             name = "completed",
             nullable = false,
-            columnDefinition = "BOOLEAN"
+            columnDefinition = "BOOLEAN",
+            length = 40
     )
+
     private Boolean completed;
     @Column(
             name="setReminder",
@@ -70,13 +76,16 @@ public class Task {
     )
     private Boolean setReminder;
 
-    public Task(String task, String description, LocalDate startDate, LocalDate endDate, Boolean completed, Boolean setReminder) {
+    public Taskello(String task, String description, LocalDate startDate, LocalDate endDate, Boolean completed, Boolean setReminder) {
         this.task = task;
         this.description = description;
         this.startDate = startDate;
         this.endDate = endDate;
         this.completed = completed;
         this.setReminder = setReminder;
+    }
+
+    public Taskello() {
     }
 
     public Long getId() {
@@ -135,4 +144,16 @@ public class Task {
         this.setReminder = setReminder;
     }
 
+    @Override
+    public String toString() {
+        return "Task{" +
+                "id=" + id +
+                ", task='" + task + '\'' +
+                ", description='" + description + '\'' +
+                ", startDate=" + startDate +
+                ", endDate=" + endDate +
+                ", completed=" + completed +
+                ", setReminder=" + setReminder +
+                '}';
+    }
 }
